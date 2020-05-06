@@ -20,7 +20,7 @@ public class FilePartReader {
         this.toLine = toLine;
     }
 
-    public String read () throws java.io.IOException {
+    public String read() throws java.io.IOException {
         File file = new File(filePath);
         BufferedReader br = new BufferedReader(new FileReader(file));
         StringBuilder contentBuilder = new StringBuilder();
@@ -31,12 +31,12 @@ public class FilePartReader {
         return contentBuilder.toString();
     }
 
-    public String readLines () {
+    public String readLines() {
         try {
-            String[] allLines = read().split("\n");
+            String[] allLinesArray = read().split("\n");
             StringBuilder sb = new StringBuilder();
-            for (int i = fromLine - 1; i < toLine && i < allLines.length; i++) {
-                sb.append(allLines[i]).append("\n");
+            for (int i = fromLine - 1; i < toLine && i < allLinesArray.length; i++) {
+                sb.append(allLinesArray[i]).append("\n");
             }
             return sb.toString();
         } catch (IOException e) {
