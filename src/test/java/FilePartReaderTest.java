@@ -7,12 +7,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FilePartReaderTest {
     private FilePartReader fpr;
-    private String simpleFilePath = "src/test/resources/test.txt";
+    private final String SIMPLE_FILE_PATH = "src/test/resources/testSimple.txt";
 
     @BeforeEach
-    public void clearFilePathReader() {
+    public void createReader() {
         fpr = new FilePartReader();
-        System.out.println("new fpr: " + fpr.toString());
     }
 
     @Test
@@ -32,7 +31,7 @@ public class FilePartReaderTest {
 
     @Test
     public void testReadExistingFile() throws IOException {
-        fpr.setup(simpleFilePath, 1, 2);
+        fpr.setup(SIMPLE_FILE_PATH, 1, 2);
         assertEquals("First line\n" +
                 "Second line\n" +
                 "Third line\n" +
@@ -47,14 +46,14 @@ public class FilePartReaderTest {
 
     @Test
     public void testReadLinesSimple() {
-        fpr.setup(simpleFilePath, 1, 2);
+        fpr.setup(SIMPLE_FILE_PATH, 1, 2);
         assertEquals("First line\n" +
                 "Second line", fpr.readLines());
     }
 
     @Test
     public void testReadLines1to1() {
-        fpr.setup(simpleFilePath, 1, 1);
+        fpr.setup(SIMPLE_FILE_PATH, 1, 1);
         assertEquals("First line", fpr.readLines());
     }
 

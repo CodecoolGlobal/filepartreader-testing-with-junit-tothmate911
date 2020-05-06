@@ -9,7 +9,7 @@ public class FileWordAnalyzer {
 
     public List<String> getWordsOrderedAlphabetically() {
         List<String> wordList = getWordList();
-        Collections.sort(wordList);
+        Collections.sort(wordList, String.CASE_INSENSITIVE_ORDER);
         return wordList;
     }
 
@@ -21,19 +21,18 @@ public class FileWordAnalyzer {
 
     public List<String> getStringsWhichPalindromes() {
         List<String> wordList = getWordList();
-        wordList.removeIf(this::isPalindrome);
+        wordList.removeIf(word -> !isPalindrome(word));
         return wordList;
-
     }
 
     private List<String> getWordList() {
         String lines = fpr.readLines();
-        return new ArrayList<>(Arrays.asList(lines.split("\\n?\\n")));
+        return new ArrayList<>(Arrays.asList(lines.split("\\s+")));
     }
 
     private boolean isPalindrome(String word) {
         int i = 0;
-        int j = word.length();
+        int j = word.length() - 1;
         while (i++ < j--) {
             if (word.charAt(i) != word.charAt(j)) return false;
         }
