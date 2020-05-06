@@ -8,7 +8,7 @@ public class FilePartReader {
     public FilePartReader() {
         filePath = "invalid";
         fromLine = 0;
-        toLine = -1;
+        toLine = -100;
     }
 
     public void setup(String filePath, Integer fromLine, Integer toLine) {
@@ -24,21 +24,28 @@ public class FilePartReader {
         File file = new File(filePath);
         BufferedReader br = new BufferedReader(new FileReader(file));
         StringBuilder contentBuilder = new StringBuilder();
+
         String currentLine;
+        boolean first = true;
         while ((currentLine = br.readLine()) != null) {
-            contentBuilder.append(currentLine).append("\n");
+            if (!first) {
+                contentBuilder.append("\n");
+            } else first = false;
+            contentBuilder.append(currentLine);
         }
+
         return contentBuilder.toString();
     }
 
     public String readLines() {
         try {
             String[] allLinesArray = read().split("\n");
-            StringBuilder sb = new StringBuilder();
-            for (int i = fromLine - 1; i < toLine && i < allLinesArray.length; i++) {
-                sb.append(allLinesArray[i]).append("\n");
+            String[] neededLinesArray = new String[toLine - fromLine + 1];
+            for (int i = fromLine - 1, counter = 0; i < toLine && i < allLinesArray.length; i++, counter++) {
+                neededLinesArray[counter] = allLinesArray[i];
             }
-            return sb.toString();
+            return String.join("\n", neededLinesArray);
+
         } catch (IOException e) {
             System.out.println("Exception: " + e.getMessage());
             return null;
